@@ -1,4 +1,4 @@
-import os, time
+import os
 import numpy as np
 
 np.set_printoptions(threshold=np.inf)
@@ -101,15 +101,15 @@ def showLevel(tank):
   C[0, 9:13] = np.array(list(level)) 
   return C
 
-def ride(x, tank):
+def ride(x, tank):                                  #3, 48, 95, 123
   placeScreen(showLevel(tank), cry, x)
   refresh()
 
-def emptyRide(x):
+def emptyRide(x):                                   #3, 48, 95, 123
   placeScreen(np.full(car.shape," "), cry, x)
   refresh()
 
-def park(n, tank):
+def park(n, tank):                                  #1 a 4 - bombas, 5 a 8 - vagas
   if n == 1:
     placeScreen(showLevel(tank), cy1, cfx1)
   elif n == 2:
@@ -130,20 +130,19 @@ def park(n, tank):
 
 def empty(n):
   if n == 1:
-    placeScreen(np.full(car.shape," "), cy2, cpx1)
+    placeScreen(np.full(car.shape," "), cy1, cfx1)
   elif n == 2:
-    placeScreen(np.full(car.shape," "), cy2, cpx1)
+    placeScreen(np.full(car.shape," "), cy2, cfx1)
   elif n == 3:
-    placeScreen(np.full(car.shape," "), cy2, cpx2)
+    placeScreen(np.full(car.shape," "), cy1, cfx2)
   elif n == 4:
-    placeScreen(np.full(car.shape," "), cy2, cpx2)
+    placeScreen(np.full(car.shape," "), cy2, cfx2)
   elif n == 5:
-    placeScreen(np.full(car.shape," "), cy2, cpx1)
+    placeScreen(np.full(car.shape," "), cy1, cpx1)
   elif n == 6:
     placeScreen(np.full(car.shape," "), cy2, cpx1)
   elif n == 7:
-    placeScreen(np.full(car.shape," "), cy2, cpx2)
+    placeScreen(np.full(car.shape," "), cy1, cpx2)
   elif n == 8:
     placeScreen(np.full(car.shape," "), cy2, cpx2)
   refresh()
-  
