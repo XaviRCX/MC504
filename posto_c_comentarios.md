@@ -27,3 +27,10 @@ L - left    		 (carro); ja foi embora do posto completamente<br>
 W - waiting		 (carro); esta na vaga esperando uma bomba<br>
 <br>
 Imagino que com tudo isso de pra imprimir tudo o que a gente quer.
+
+<h2>Sleeps</h2>
+Os sleeps que estão la são provisórios. Vamos mudar depois pra melhor ilustrar o problema. <br>
+No código da prof ela estava usando sleep(random()%3) para dormir 0, 1 ou 2 segundos, mas isso nao estava dando certo.<br> 
+Primeiro meu c não reconhecia random(), então eu troquei por rand().<br>
+Segundo que estava tendo um problema com rand() em multithread porque o rand() usa como seed o relogio do computador, e como temos várias threads usando essa função quase simultaneamente todas elas recebem o mesmo número pseudoaleatório e não conseguia espaçar elas no tempo aleatoriamente.<br>
+Ainda não achei uma boa solução pra isso, então fiz sleep(id_da_thread % 3), que essencialmente cria tres grupos de threads que agem simultaneamente kkkk. É uma gambiarra mas depois trocamos pra algo melhor.<br>
