@@ -16,17 +16,18 @@ sem_t sem_bomba_ocupada[N_BOMBAS]; /* Indica se determinada bomba esta atualment
 
 /*
  * Variaveis para guardar estado dos carros/bombas.
- * A - arrived           (carro);
- * CAB - abastecendo  (carro);
- * BAB - abastecendo (bomba);
- * E - exit  		 (carro);
- * I - idle          (carro);
- * L - left    		 (carro);
- * S - sleeping 	 (bomba);
- * W - waiting		 (carro);
+ * A - arrived           (carro);  chegou ao posto, mas nao necessariamente entrou em uma vaga
+ * CAB - abastecendo  (carro); carro abastecendo
+ * E - exit  		 (carro); saindo do posto
+ * I - idle          (carro); nao chegou ao posto ainda
+ * L - left    		 (carro); ja foi embora do posto completamente
+ * W - waiting		 (carro); esta na vaga esperando uma bomba
+ * 
+ * BAB - abastecendo (bomba); bomba abastecendo
+ * D - desocupada 	 (bomba); esta desocupada
  */
 typedef enum {A, CAB, E, I, L, W} estado_c;
-typedef enum {BAB, S} estado_b;
+typedef enum {BAB, D} estado_b;
 
 estado_c estado_carros[N_CARROS];
 estado_b estado_bombas[N_BOMBAS];
@@ -134,7 +135,7 @@ void imprimeCineminha() {
     case BAB:
       printf(" ... ");
       break;
-    case S:
+    case D:
       printf(" zzz ");
       break;
     }
@@ -179,7 +180,7 @@ void imprimeCineminha() {
     case BAB:
       printf(" %2d  ", carros_em_bombas[i]);
       break;
-    case S:
+    case D:
       printf("     ");
       break;
     }
@@ -269,7 +270,7 @@ void* f_carro(void* v) {
 
         sem_wait(&sem_estados);	/* Pega o direito de alterar estados (sem_estados = 0)*/
 
-        estado_carros[id] = W; /* Carro esta waiting para achar uma vaga*/
+        estado_carros[id] = W; /* Carro na vaga esperando uma bomba*/
         
         /* Achando uma vaga para o carro */
         for (i = 0; i < N_VAGAS_ESTAC; i++) {
@@ -311,7 +312,7 @@ void* f_carro(void* v) {
         
         /* Carro sai do posto */
         estado_carros[id] = E; /* Carro esta exiting*/
-        estado_bombas[minha_bomba] = S; /* bomba esta sleeping*/
+        estado_bombas[minha_bomba] = D; /* bomba esta desocupada*/
         
         imprimeCineminha(); /* Imprime que o carro esta saindo do posto*/
         
@@ -347,7 +348,7 @@ int main() {
         sem_init(&sem_carro_abastecido[i], 0, 0);
 
         sem_wait(&sem_estados); /* Pega direito de alterar estados (sem_estados=0)*/
-        estado_bombas[i] = S;
+        estado_bombas[i] = D;
         sem_post(&sem_estados); /* Libera direito de alterar estados (sem_estados=1)*/
     }
 
