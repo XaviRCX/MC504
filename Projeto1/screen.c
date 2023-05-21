@@ -278,22 +278,22 @@ void fill(int n, int tank, int time) {
 
 void screenTest() {
     inicialize();
-    for(int i = 0; i < 5; i++){
-        riding(i, 44, 50000);
-    }
-    for(int i = 0; i < 4; i++){
-        park(i, 63);
-        sleep(1);
-        empty(i);
-    }
-    for(int i = 4; i < 8; i++){
-        fill(i, 0, 10000);
+    for (int n = 0; n < 9; n++) {
+        riding(n, 44, 50000);
+        if (n < 4) {
+            park(n, 44);
+            sleep(1);
+            empty(n);
+        }
+        else if (n < 8) {
+            fill(n, 44, 50000);
+        }
     }
     end();
 }
 
 int main() {
     //funcao de teste
-    //screenTest();
+    screenTest();
     return 0;
 }
