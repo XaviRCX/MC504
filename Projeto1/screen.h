@@ -16,7 +16,7 @@ void park(int n, int tank);
 void empty(int n);
 
 //faz a animacao de andar pela rua
-void riding(int ni, int nf, int tank, int time);
+void riding(int n, int tank, int time);
 
 //anima o carro enchendo em uma das vagas
 void fill(int n, int tank, int time);
