@@ -9,7 +9,7 @@ Ao chegar a uma vaga de espera, em determinado momento o carro passa a desejar a
 Após abastecer, o carro libera a bomba e vai embora do posto. <br>
 Todo esse controle de sincronização e comunicação entre threads é feito por múltiplos semáforos. <br>
 
-![Imagem Posto](https://github.com/filipe-e-pedro/MC322-A_1s_2022/blob/main/imagens/diagrama_classes.png)
+![Imagem Posto](https://github.com/XaviRCX/MC504/blob/main/Projeto1/Imagens/Imagem%20Posto.png)
 
 # Equipe
 * Filipe Franco Ferreira - 251027
