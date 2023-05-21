@@ -33,6 +33,14 @@ car = np.array([
 [' ','\'','-','-','(','_',')','-','-','-','-','-','-','-','(','_',')','-','-','\'',' ']
 ])
 
+carBack = np.array([
+[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+[' ',' ',' ',' ',' ','.','-','-','-','-','-','-','-','-','.',' ',' ',' ',' ',' ',' '],
+[' ','_','_','_','/',' ','_','_','_','|','_','_','_','_','_','\\','_','_','_','_',' '],
+['*',',',' ',' ',' ','_',' ',' ',' ','|',' ','-',' ',' ',' ','_',' ',' ',' ',' ','O'],
+[' ','\'','-','-','(','_',')','-','-','-','-','-','-','-','(','_',')','-','-','\'',' ']
+])
+
 P = np.array([
 ['#','#','#','#','#','#','#'],
 ['#','#',' ',' ',' ','#','#'],
@@ -91,8 +99,10 @@ placeScreen(parking, 0, 120)
 placeScreen(parking, 20, 120)
 placeScreen(P, 12, 116)
 
-def showLevel(tank):
+def showLevel(tank, direction):
   C = car.copy()
+  if direction == -1:
+    C = carBack.copy()
   level = str(tank) + '%'
   if tank < 10:
     level = '  ' + level
@@ -101,8 +111,8 @@ def showLevel(tank):
   C[0, 9:13] = np.array(list(level)) 
   return C
 
-def ride(x, tank):                                  #3, 48, 95, 123
-  placeScreen(showLevel(tank), cry, x)
+def ride(x, tank, direction):                       #3, 48, 95, 123
+  placeScreen(showLevel(tank, direction), cry, x)
   refresh()
 
 def emptyRide(x):                                   #3, 48, 95, 123
@@ -111,21 +121,21 @@ def emptyRide(x):                                   #3, 48, 95, 123
 
 def park(n, tank):                                  #1 a 4 - bombas, 5 a 8 - vagas
   if n == 1:
-    placeScreen(showLevel(tank), cy1, cfx1)
+    placeScreen(showLevel(tank, 1), cy1, cfx1)
   elif n == 2:
-    placeScreen(showLevel(tank), cy2, cfx1)
+    placeScreen(showLevel(tank, 1), cy2, cfx1)
   elif n == 3:
-    placeScreen(showLevel(tank), cy1, cfx2)
+    placeScreen(showLevel(tank, 1), cy1, cfx2)
   elif n == 4:
-    placeScreen(showLevel(tank), cy2, cfx2)
+    placeScreen(showLevel(tank, 1), cy2, cfx2)
   elif n == 5:
-    placeScreen(showLevel(tank), cy1, cpx1)
+    placeScreen(showLevel(tank, 1), cy1, cpx1)
   elif n == 6:
-    placeScreen(showLevel(tank), cy2, cpx1)
+    placeScreen(showLevel(tank, 1), cy2, cpx1)
   elif n == 7:
-    placeScreen(showLevel(tank), cy1, cpx2)
+    placeScreen(showLevel(tank, 1), cy1, cpx2)
   elif n == 8:
-    placeScreen(showLevel(tank), cy2, cpx2)
+    placeScreen(showLevel(tank, 1), cy2, cpx2)
   refresh()
 
 def empty(n):
@@ -146,3 +156,4 @@ def empty(n):
   elif n == 8:
     placeScreen(np.full(car.shape," "), cy2, cpx2)
   refresh()
+  
