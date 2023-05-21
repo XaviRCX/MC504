@@ -276,6 +276,7 @@ void fill(int n, int tank, int time) {
     }
 }
 
+//funcao de teste
 void screenTest() {
     inicialize();
     for (int n = 0; n < 9; n++) {
