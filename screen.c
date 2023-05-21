@@ -229,22 +229,3 @@ void empty(int n) {
         break;
     }
 }
-
-int main() {
-    inicialize();
-    for(int i = 0; i < 100; i++){
-        ride(i, 50, false);
-        printScreen();
-        usleep(100000);
-        emptyRide(i);
-    }
-    for(int i = 0; i < 8; i++){
-        park(i, i*10);
-        printScreen();
-        sleep(1);
-        empty(i);
-    }
-    printScreen();
-    end();
-    return 0;
-}
