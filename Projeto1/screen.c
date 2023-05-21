@@ -292,9 +292,3 @@ void screenTest() {
     }
     end();
 }
-
-int main() {
-    //funcao de teste
-    //screenTest();
-    return 0;
-}
