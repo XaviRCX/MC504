@@ -20,11 +20,14 @@ Todo esse controle de sincronização e comunicação entre threads é feito por
 # Estrutura de Arquivos e Pastas
 
 ~~~
-├─── README.md                                         <- apresentação do projeto
+├─── README.md                                         <- Apresentação do projeto
 │
+├─── Imagens           
+|     ├── Imagem Posto.png    <- Imagem mostrada acima
+|
 ├─── posto.c         <- Arquivo principal com multithread que chama as animações
 |
-├─── screen.h                        <- Implementação das animações no terminal.
+├─── screen.h                        <- Implementação das animações no terminal
 ~~~
 
 # Link para os slides usados na apresentação
