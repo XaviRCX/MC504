@@ -236,33 +236,31 @@ void empty(int n) {
 }
 
 //anima o carro andando pela rua
-void riding(int ni, int nf, int tank, int time) {
+void riding(int n, int tank, int time) {
     //ate 2 primeiras vagas
-    if (ni == -1) {
-        for (int x = 0; x < 6; x++) {
-            ride(x, tank, time);
-        }
+    for (int x = 0; x < 6; x++) {
+        ride(x, tank, time);
     }
     //ate 4 primeiras vagas
-    if (ni < 2 && nf > 1) {
+    if (n > 1) {
         for (int x = 6; x < 34; x++) {
             ride(x, tank, time);
         }
     }
     //ate 6 primeiras vagas
-    if (ni < 4 && nf > 3) {
+    if (n > 3) {
         for (int x = 34; x < 64; x++) {
             ride(x, tank, time);
         }
     }
     //ate 8 primeiras vagas
-    if (ni < 6 && nf > 5) {
+    if (n > 5) {
         for (int x = 64; x < 109; x++) {
             ride(x, tank, time);
         }
     }
     //ate o fim da rua
-    if (ni < 8 && nf > 7) {
+    if (n > 7) {
         for (int x = 109; x < 127; x++) {
             ride(x, tank, time);
         }
@@ -282,19 +280,15 @@ void fill(int n, int tank, int time) {
 void screenTest() {
     inicialize();
     for (int n = 0; n < 9; n++) {
-        riding(-1, n, 44, 10000);
+        riding(n, 44, 50000);
         if (n < 4) {
             park(n, 44);
             sleep(1);
             empty(n);
         }
         else if (n < 8) {
-            fill(n, 44, 10000);
+            fill(n, 44, 50000);
         }
-    }
-    for (int i = -1; i < 8; i++) {
-        riding(i, i+1, 44, 50000);
-        sleep(1);
     }
     end();
 }
