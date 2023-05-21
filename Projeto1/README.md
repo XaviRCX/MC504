@@ -33,4 +33,3 @@ https://docs.google.com/presentation/d/1BZFTuBNSvu41Y8FaGe5mSQjCI6GCowWOGy4tkswA
 
 # Link do vídeo da apresentação
 
-https://docs.google.com/presentation/d/1BZFTuBNSvu41Y8FaGe5mSQjCI6GCowWOGy4tkswAttU/edit?pli=1#slide=id.p 
