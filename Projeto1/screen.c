@@ -294,6 +294,6 @@ void screenTest() {
 
 int main() {
     //funcao de teste
-    screenTest();
+    //screenTest();
     return 0;
 }
