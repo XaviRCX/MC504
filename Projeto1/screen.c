@@ -242,25 +242,25 @@ void riding(int n, int tank, int time) {
         ride(x, tank, time);
     }
     //ate 4 primeiras vagas
-    if (n > 0) {
+    if (n > 1) {
         for (int x = 6; x < 34; x++) {
             ride(x, tank, time);
         }
     }
     //ate 6 primeiras vagas
-    if (n > 1) {
+    if (n > 3) {
         for (int x = 34; x < 64; x++) {
             ride(x, tank, time);
         }
     }
     //ate 8 primeiras vagas
-    if (n > 2) {
+    if (n > 5) {
         for (int x = 64; x < 109; x++) {
             ride(x, tank, time);
         }
     }
     //ate o fim da rua
-    if (n > 3) {
+    if (n > 7) {
         for (int x = 109; x < 127; x++) {
             ride(x, tank, time);
         }
@@ -276,7 +276,6 @@ void fill(int n, int tank, int time) {
     }
 }
 
-//funcao de teste
 void screenTest() {
     inicialize();
     for(int i = 0; i < 5; i++){
