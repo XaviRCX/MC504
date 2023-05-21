@@ -229,3 +229,7 @@ void empty(int n) {
         break;
     }
 }
+
+int main() {
+    return 0;
+}
