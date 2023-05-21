@@ -112,16 +112,6 @@ void restock() {
     placeScreen(5, 7, 12, 116, P);
 }
 
-void inicialize() {
-    restock();    
-    initscr();
-}
-
-void end() {
-    getch();
-    endwin();
-}
-
 void printScreen() {
     erase();
     for (int y = 0; y < screenY; y++) {
@@ -133,6 +123,18 @@ void printScreen() {
     refresh();
     restock();
 };
+
+void inicialize() {
+    restock();    
+    initscr();
+    printScreen();
+}
+
+void end() {
+    printScreen();
+    getch();
+    endwin();
+}
 
 void changeLevel(int tank) {
     int c = tank/100;
@@ -158,6 +160,7 @@ void ride(int x, int tank, bool reverse) {
     else {
         placeScreen(5, 21, 12, x, car);
     }
+    printScreen();
 }
 
 void emptyRide(int x) {
@@ -196,6 +199,7 @@ void park(int n, int tank) {
     default:
         break;
     }
+    printScreen();
 }
 
 void empty(int n) {
