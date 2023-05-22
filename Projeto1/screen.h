@@ -9,6 +9,9 @@ void end();
 //n = 4 - 7, posto
 //n = 8 passa direto pelas vagas
 
+//imprime a tela
+void printScreen();
+
 //posiciona um carro em uma das 8 vagas;
 void park(int n, int tank);
  
