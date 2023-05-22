@@ -23,15 +23,15 @@ Todo esse controle de sincronização e comunicação entre threads é feito por
 ├─── Imagens           
 |     ├── Imagem Posto.png    <- Imagem mostrada acima
 |
-├─── README.md                                         <- Apresentação do projeto
+├─── README.md                <- Apresentação do projeto
 |
-├─── posto         <- Arquivo principal executável
+├─── posto                    <- Arquivo principal executável
 |
-├─── posto.c         <- Arquivo fonte principal 
+├─── posto.c                  <- Arquivo fonte principal 
 |
-├─── screen.c                        <- Implementação das animações no terminal
+├─── screen.c                 <- Implementação das animações no terminal
 |
-├─── screen.h                        <- Header das animações no terminal
+├─── screen.h                 <- Header das animações no terminal
 ~~~
 
 # Link para os slides usados na apresentação
