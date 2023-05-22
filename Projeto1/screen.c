@@ -134,6 +134,7 @@ void inicialize() {
 
 //finaliza a tela
 void end() {
+    printScreen();
     getch();
     endwin();
 }
