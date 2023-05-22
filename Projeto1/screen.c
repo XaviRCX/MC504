@@ -123,8 +123,6 @@ void printScreen() {
         }
     }
     refresh();
-    //reposiciona alguns elementos basicos do design da tela
-    restock();
 };
 
 //inicializa a tela
@@ -136,7 +134,6 @@ void inicialize() {
 
 //finaliza a tela
 void end() {
-    printScreen();
     getch();
     endwin();
 }
@@ -231,6 +228,8 @@ void empty(int n) {
     default:
         break;
     }
+    //reposiciona alguns elementos basicos do design da tela
+    restock();
 }
 
 //anima o carro andando pela rua
@@ -272,4 +271,21 @@ void fill(int n, int tank, int time) {
         usleep(time);
         empty(n);
     }
+}
+
+//funcao de teste
+void screenTest() {
+    inicialize();
+    for (int n = 0; n < 9; n++) {
+        riding(n, 44, 50000);
+        if (n < 4) {
+            park(n, 44);
+            sleep(1);
+            empty(n);
+        }
+        else if (n < 8) {
+            fill(n, 44, 50000);
+        }
+    }
+    end();
 }
