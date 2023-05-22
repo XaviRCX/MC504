@@ -192,11 +192,17 @@ void* f_carro(void* v) {
     return NULL;
 }
 
+void* f_printa() {
+    while (1) {
+        printScreen();
+    }
+}
+
 
 int main() {
     inicialize();
-    pthread_t thr_carros[N_CARROS], thr_bombas[N_BOMBAS];
-    int i, id_cl[N_CARROS], id_bar[N_BOMBAS];
+    pthread_t thr_carros[N_CARROS], thr_bombas[N_BOMBAS], thr_printa[1];
+    int i, id_cl[N_CARROS], id_bar[N_BOMBAS], id_printa[1];
 
     sem_init(&sem_n_vagas_desocupadas, 0, N_VAGAS_ESTAC);
     sem_init(&sem_escreve_painel, 0, 1);
@@ -225,6 +231,8 @@ int main() {
         sem_post(&sem_estados); /* Libera direito de alterar estados (sem_estados=1)*/
     }
     
+    pthread_create(&thr_printa[0], NULL, f_printa, (void*) &id_printa[0]);
+
     for (i = 0; i < N_CARROS; i++) {
         id_cl[i] = i;
         pthread_create(&thr_carros[i], NULL, f_carro, (void*) &id_cl[i]);
