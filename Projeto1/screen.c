@@ -123,8 +123,6 @@ void printScreen() {
         }
     }
     refresh();
-    //reposiciona alguns elementos basicos do design da tela
-    restock();
 };
 
 //inicializa a tela
@@ -157,7 +155,6 @@ void changeLevel(int tank) {
 void ride(int x, int tank, int time) {
     changeLevel(tank);
     placeScreen(5, 21, 12, x, car);
-    printScreen();
     usleep(time);
     placeScreen(5, 21, 12, x, clearCar);
     restock();
@@ -197,7 +194,6 @@ void park(int n, int tank) {
     default:
         break;
     }
-    printScreen();
 }
 
 //remove o carro de uma vaga
@@ -233,6 +229,8 @@ void empty(int n) {
     default:
         break;
     }
+    //reposiciona alguns elementos basicos do design da tela
+    restock();
 }
 
 //anima o carro andando pela rua
