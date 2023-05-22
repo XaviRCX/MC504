@@ -121,7 +121,7 @@ void* f_carro(void* v) {
         
         if(minha_vaga > 1) {
             //vai para posicao das vagas 3 e 4
-            riding(2, gas, 100000);
+            riding(3, gas, 100000);
 
         }else {
             //vai pra posicao das vagas 1 e 2
@@ -153,11 +153,12 @@ void* f_carro(void* v) {
         /* Imprime que o carro esta na bomba e vai comecar a abastecer. */
         empty(minha_vaga);
         
-        fill(minha_bomba + 4, gas, 10000);
-     
+        riding(minha_bomba + 4, gas, 100000);
 
         sem_post(&sem_estados); /* Libera direito de alterar estados (sem_estados=1)*/
         
+        fill(minha_bomba + 4, gas, 100000);
+
         sem_wait(&sem_carro_abastecido[minha_bomba]); /* Espera o carro o carro ficar abastecido e muda para indicar que nao esta mais abastecido (sem_carro_abastecido[minha_bomba] = 0)*/
         
         sem_wait(&sem_estados); /* Pega direito de alterar estados (sem_estados=0)*/
@@ -171,7 +172,7 @@ void* f_carro(void* v) {
         //saiu da bomba
         empty(minha_bomba + 4);
         //carro foi embora
-        riding(8, 100, 10000);
+        riding(8, 100, 100000);
         
         sem_post(&sem_bombas_vazias[minha_bomba]); /* Passa a mostrar que a bomba agora esta vazia (sem_bombas_vazias[minha_bomba] = 1) SE COMUNICA COM OUTROS CARROS*/
         estado_carros[id] = L; /* Carro ja left*/
@@ -184,7 +185,7 @@ void* f_carro(void* v) {
         /* Imprime que o carro passa reto e nao entra em nenhuma vaga*/
         
     
-        riding(8, gas, 1000000);
+        riding(8, gas, 100000);
 
         estado_carros[id] = L;  /* Carro ja left*/
         sem_post(&sem_estados);  /* Libera direito de alterar estados (sem_estados=1)*/
