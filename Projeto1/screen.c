@@ -273,20 +273,3 @@ void fill(int n, int tank, int time) {
         empty(n);
     }
 }
-
-//funcao de teste
-void screenTest() {
-    inicialize();
-    for (int n = 0; n < 9; n++) {
-        riding(n, 44, 50000);
-        if (n < 4) {
-            park(n, 44);
-            sleep(1);
-            empty(n);
-        }
-        else if (n < 8) {
-            fill(n, 44, 50000);
-        }
-    }
-    end();
-}
