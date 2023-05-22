@@ -168,6 +168,7 @@ void* f_carro(void* v) {
         sem_post(&sem_estados); /* Libera direito de alterar estados (sem_estados=1)*/
         
     } else {
+        sleep(2);
         /* Carro desistiu de abastecer e passa reto */
         sem_wait(&sem_estados); /* Pega direito de alterar estados (sem_estados=0)*/
         /* Imprime que o carro passa reto e nao entra em nenhuma vaga*/
