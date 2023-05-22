@@ -1,16 +1,20 @@
-
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "screen.h"  
+#include <time.h>
+
+//parametros n e valor do tank
 
 #define N_CARROS 20
 #define N_BOMBAS 4
 #define N_VAGAS_ESTAC 4
 
+
 sem_t sem_n_vagas_desocupadas; /* Conta o numero de vagas desocupadas no estacionamento*/
-sem_t sem_bombas_vazias[N_BOMBAS]; /* Indica quais bombas estão vazias (1=vazia, 0=cheia)*/
+sem_t sem_bombas_vazias[N_BOMBAS]; /* Indica quais bombas estÃ£o vazias (1=vazia, 0=cheia)*/
 sem_t sem_carro_abastecido[N_BOMBAS]; /* Indica se o carro atualmente parado em determinada bomba acabou de abastecer (1=abastecido, 0=nao)*/
 sem_t sem_bomba_ocupada[N_BOMBAS]; /* Indica se determinada bomba esta atualmente ocupada por um carro (1=ocupada, 0=vazia)*/
 
@@ -53,185 +57,13 @@ Mas nao precisamos mostrar isso no terminal
 sem_t sem_escreve_painel, sem_le_painel; /* Semaforos que controlam quem pode ler o painel e quem pode escrever nele (1=ninguem esta fazendo isso, 0=alguem esta fazendo)*/
 int painel; /* Inteiro que mostra o id da bomba que esta indicando que esta vazia*/
 
-/* Funcao responsavel pela impressao do cineminha. */
-void imprimeCineminha() {
-  int i, j, qtosClientesArrived = 0, qtosClientesExit = 0, titulo = 0;
-  int clientesArrived[N_CARROS], clientesExit[N_CARROS]; 
-  
-  /* Verifica quais clientes estao no estado "Arrived". */
-  for (i = 0; i < N_CARROS; i++) {
-    if (estado_carros[i] == A) {
-      clientesArrived[qtosClientesArrived++] = i;
-    }
-  }
-  
-  /* Verifica quais clientes estao no estado "Exit". */
-  for (i = 0; i < N_CARROS; i++) {
-    if (estado_carros[i] == E) {
-      clientesExit[qtosClientesExit++] = i;
-    }
-  }
-  
-  /*****************************************************************************
-   **************************** IMPRESSAO DO TITULO ****************************
-   ****************************************************************************/
-  
-  /* Imprime os espacos em branco da parte referente aos clientes Arrived. */
-  for (i = 0; i < qtosClientesArrived; i++) {
-    printf("     ");
-  }
-  
-  /* Faz a conta para imprimir o tÃ­tulo 'BARBEARIA' no meio. */
-  
-  if (qtosClientesArrived == 0) {
-    printf("     ");
-  }
-  
-  titulo = (4 + 5 * N_VAGAS_ESTAC + 5 + 5 * N_BOMBAS) / 2;
-  
-  titulo -= 5;
-  
-  for (i = 0; i < titulo; i++) {
-    printf(" ");
-  }
-  
-  printf("BARBEARIA\n");
-  
-  /*****************************************************************************
-   ************************** FIM IMPRESSAO DO TITULO **************************
-   ****************************************************************************/
-  
-  /*****************************************************************************
-   ************************** IMPRESSAO PRIMEIRA LINHA *************************
-   ****************************************************************************/
-  
-  for (i = 0; i < qtosClientesArrived; i++) {
-    printf(" ... ");
-  }
-  
-  /* Se nao chegou clientes, imprimimos espacamento para ficar alinhado com
-   * outros momentos do cineminha.
-   */
-  if (qtosClientesArrived == 0) {
-    printf("     ");
-  }
-  
-  printf ("/ ");
-  
-  /* Imprimi as cadeiras dos clientes. */
-  for (i = 0; i < N_VAGAS_ESTAC; i++) {
-    if (estado_vagas[i] == B) {
-      printf(" ... ");
-    } else {
-      printf("     ");
-    }
-  }
-  
-  /* EspaÃ§o entre as cadeiras dos clientes e as dos barbeiros. */ 
-  printf("    ");
-  
-  for (i = 0; i < N_BOMBAS; i++) {
-    switch (estado_bombas[i]) {
-    case BAB:
-      printf(" ... ");
-      break;
-    case D:
-      printf(" zzz ");
-      break;
-    }
-  }
-  printf("\\ \n");
-  
-  /*****************************************************************************
-   ********************** FIM DA IMPRESSAO PRIMEIRA LINHA **********************
-   ****************************************************************************/
-  
-  /*****************************************************************************
-   ************************** IMPRESSAO SEGUNDA LINHA **************************
-   ****************************************************************************/
-  
-  for (i = 0; i < qtosClientesArrived; i++) {
-    printf(" %2d  ", clientesArrived[i]);
-  }
-  
-  /* Se nao chegou clientes, imprimimos espacamento para ficar alinhado com
-   * outros momentos do cineminha.
-   */
-  if (qtosClientesArrived == 0) {
-    printf("     ");
-  }
-  
-  printf ("| ");
-  
-  for (i = 0; i < N_VAGAS_ESTAC; i++) {
-    if (estado_vagas[i] == B) {
-      printf(" %2d  ", conteudo_vagas[i]);
-    } else {
-      printf("     ");
-    }
-  }
-  
-  /* EspaÃ§o entre as cadeiras dos clientes e dos barbeiros. */
-  printf("    ");
-  
-  j = 0;
-  for (i = 0; i < N_BOMBAS; i++) {
-    switch (estado_bombas[i]) {
-    case BAB:
-      printf(" %2d  ", carros_em_bombas[i]);
-      break;
-    case D:
-      printf("     ");
-      break;
-    }
-  }
-  
-  printf("| ");
-  
-  for (i = 0; i < qtosClientesExit; i++) {
-    printf(" %2d  ", clientesExit[i]);
-  }
-  
-  printf("\n");
-  
-  /*****************************************************************************
-   ********************** FIM DA IMPRESSAO SEGUNDA LINHA ***********************
-   ****************************************************************************/
-  
-  /*****************************************************************************
-   ************************* IMPRESSAO TERCEIRA LINHA **************************
-   ****************************************************************************/
-  
-  for (i = 0; i < qtosClientesArrived; i++) {
-    printf("     ");
-  }
-  
-  /* Se nao chegou clientes, imprimimos espacamento para ficar alinhado com
-   * outros momentos do cineminha.
-   */
-  if (qtosClientesArrived == 0) {
-    printf("     ");
-  }
-  
-  printf("\\ ");
-  
-  for (i = 0; i < N_VAGAS_ESTAC; i++) {
-    printf(" C%02d ", i);
-  }
-  
-  printf("    ");
-  
-  for (i = 0; i < N_BOMBAS; i++) {
-    printf(" B%02d ", i);
-  }
-  
-  printf("/ \n\n");
-  
-  /*****************************************************************************
-   ********************** FIM DA IMPRESSAO TERCEIRA LINHA **********************
-   ****************************************************************************/
-  
-  return;
+
+int random_number(int lower_limit, int upper_limit) {
+    // Obter uma semente (seed) aleatória baseada no tempo atual
+    srand(time(NULL));
+    
+    // Gerar e retornar um número aleatório dentro do intervalo
+    return (rand() % (upper_limit - lower_limit + 1)) + lower_limit;
 }
 
 void* f_bomba(void *v) {
@@ -252,17 +84,19 @@ void* f_bomba(void *v) {
 /* Thread dos carros. */
 void* f_carro(void* v) {
     int id = *(int*) v;
-    int i;
+    int i, gas;
     int minha_bomba, minha_vaga;
-
+    gas = random_number(10, 70);
     sleep(id % 3);
     
     sem_wait(&sem_estados); /* Pega o direito de alterar estados*/
-    
     /* Carro chegou ao posto (mas nao necessariamente entra em uma vaga) */
     estado_carros[id] = A; /* Arrived no posto*/
-    imprimeCineminha(); /* Imprime que o carro chegou ao posto, mas nao necessariamente entra em uma vaga */
 
+    /* Imprime que o carro chegou ao posto, mas nao necessariamente entra em uma vaga */
+
+    //faz o caminho ate a entrada do estacionamento
+    
     sem_post(&sem_estados); /* Libera direito de alterar estados*/
 
     /* Para ser mais justo, chegar ao posto, carros nao vao direto as bombas, mas sim tentam entrar em alguma vaga de espera antes*/
@@ -281,8 +115,19 @@ void* f_carro(void* v) {
                 break;
             }
         }
+
+        /* Imprime com carro dentro da vaga */
         
-        imprimeCineminha();  /* Imprime com carro dentro da vaga */
+        if(minha_vaga > 1) {
+            //vai para posicao das vagas 3 e 4
+            riding(2, gas, 100000);
+
+        }else {
+            //vai pra posicao das vagas 1 e 2
+            riding(1, gas, 100000);
+        }
+        
+        park(minha_vaga, gas);
 
 
         sem_post(&sem_estados); /* Libera direito de alterar estados (sem_estados=1)*/
@@ -302,7 +147,13 @@ void* f_carro(void* v) {
         estado_bombas[minha_bomba] = BAB; /* Bomba abastecendo*/
         carros_em_bombas[minha_bomba] = id; /* Guarda que o carro com determinado id esta nesta bomba*/
         estado_vagas[minha_vaga] = F; /* Indica que a vaga esta free*/
-        imprimeCineminha(); /* Imprime que o carro esta na bomba e vai comecar a abastecer. */
+
+        
+        /* Imprime que o carro esta na bomba e vai comecar a abastecer. */
+        empty(minha_vaga);
+        
+        fill(minha_bomba + 4, gas, 10000);
+     
 
         sem_post(&sem_estados); /* Libera direito de alterar estados (sem_estados=1)*/
         
@@ -314,7 +165,12 @@ void* f_carro(void* v) {
         estado_carros[id] = E; /* Carro esta exiting*/
         estado_bombas[minha_bomba] = D; /* bomba esta desocupada*/
         
-        imprimeCineminha(); /* Imprime que o carro esta saindo do posto*/
+        /* Imprime que o carro esta saindo do posto*/
+        
+        //saiu da bomba
+        empty(minha_bomba + 4);
+        //carro foi embora
+        riding(8, 100, 10000);
         
         sem_post(&sem_bombas_vazias[minha_bomba]); /* Passa a mostrar que a bomba agora esta vazia (sem_bombas_vazias[minha_bomba] = 1) SE COMUNICA COM OUTROS CARROS*/
         estado_carros[id] = L; /* Carro ja left*/
@@ -324,16 +180,21 @@ void* f_carro(void* v) {
     } else {
         /* Carro desistiu de abastecer e passa reto */
         sem_wait(&sem_estados); /* Pega direito de alterar estados (sem_estados=0)*/
-        imprimeCineminha(); /* Imprime que o carro passa reto e nao entra em nenhuma vaga*/
+        /* Imprime que o carro passa reto e nao entra em nenhuma vaga*/
+        
+    
+        riding(8, gas, 1000000);
+
         estado_carros[id] = L;  /* Carro ja left*/
         sem_post(&sem_estados);  /* Libera direito de alterar estados (sem_estados=1)*/
     }
-    
+  
     return NULL;
 }
 
 
 int main() {
+    inicialize();
     pthread_t thr_carros[N_CARROS], thr_bombas[N_BOMBAS];
     int i, id_cl[N_CARROS], id_bar[N_BOMBAS];
 
@@ -385,6 +246,6 @@ int main() {
     sem_destroy(&sem_escreve_painel);
     sem_destroy(&sem_le_painel);
     sem_destroy(&sem_estados);
-  
+    end();
   return 0;
 }
