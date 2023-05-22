@@ -25,7 +25,9 @@ Todo esse controle de sincronização e comunicação entre threads é feito por
 |
 ├─── README.md                                         <- Apresentação do projeto
 |
-├─── posto.c         <- Arquivo principal com multithread que chama as animações
+├─── posto         <- Arquivo principal executável
+|
+├─── posto.c         <- Arquivo fonte principal 
 |
 ├─── screen.c                        <- Implementação das animações no terminal
 |
