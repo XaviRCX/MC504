@@ -39,4 +39,4 @@ Todo esse controle de sincronização e comunicação entre threads é feito por
 https://docs.google.com/presentation/d/1BZFTuBNSvu41Y8FaGe5mSQjCI6GCowWOGy4tkswAttU/edit?pli=1#slide=id.p 
 
 # Link do vídeo da apresentação
-
+https://www.canva.com/design/DAFjmlBzpN4/jvcXoqN_lWBZjNVGu6VCmg/watch?utm_content=DAFjmlBzpN4&utm_campaign=celebratory_first_publish&utm_medium=link&utm_source=celebratory_first_publish
