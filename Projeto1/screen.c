@@ -157,7 +157,6 @@ void changeLevel(int tank) {
 void ride(int x, int tank, int time) {
     changeLevel(tank);
     placeScreen(5, 21, 12, x, car);
-    printScreen();
     usleep(time);
     placeScreen(5, 21, 12, x, clearCar);
     restock();
@@ -197,7 +196,6 @@ void park(int n, int tank) {
     default:
         break;
     }
-    printScreen();
 }
 
 //remove o carro de uma vaga
