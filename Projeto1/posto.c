@@ -49,6 +49,7 @@ int carros_em_bombas[N_BOMBAS]; /* indica qual carro esta em qual bomba*/
 
 /* Por questoes de sincronizacao, apenas uma bomba ou carro pode alterar o estado dos componentes por vez, que sera controlado pelo semaforo a seguir. */
 sem_t sem_estados; /* Semaforo para troca de estados. */
+int printa = 1;
 
 /* Por questoes de sincronizacao, apenas uma bomba pode indicar que esta vazia por vez, e apenas um carro pode ler essa informacao por vez. 
 Na historinha do problema eh como se essa informacao fosse indicada num "painel"
@@ -193,7 +194,7 @@ void* f_carro(void* v) {
 }
 
 void* f_printa() {
-    while (1) {
+    while (printa) {
         printScreen();
     }
 }
@@ -246,6 +247,9 @@ int main() {
     for (i = 0; i < N_CARROS; i++) {
         pthread_join(thr_carros[i], NULL);
     }
+
+    printa = 0;
+    sleep(1);
 
     sem_destroy(&sem_n_vagas_desocupadas);
     sem_destroy(sem_bombas_vazias);
