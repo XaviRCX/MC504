@@ -157,6 +157,7 @@ void ride(int x, int tank, int time) {
     placeScreen(5, 21, 12, x, car);
     usleep(time);
     placeScreen(5, 21, 12, x, clearCar);
+    //reposiciona alguns elementos basicos do design da tela
     restock();
 }
 
@@ -229,8 +230,6 @@ void empty(int n) {
     default:
         break;
     }
-    //reposiciona alguns elementos basicos do design da tela
-    restock();
 }
 
 //anima o carro andando pela rua
